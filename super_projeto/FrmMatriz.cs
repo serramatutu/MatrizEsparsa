@@ -25,10 +25,43 @@ namespace super_projeto
         /// </summary>
         private MatrizEsparsa matriz;
 
+        /// <summary>
+        /// Accessor utilizado por outros forms para obter a matriz resultante da edição pelo usuário.
+        /// </summary>
+        public MatrizEsparsa Matriz
+        {
+            get
+            {
+                return matriz;
+            }
+
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException();
+
+                matriz = value;
+                ExibirMatriz();
+            }
+        }
+
+        /// <summary>
+        /// Construtor do form para edição de uma nova matriz.
+        /// </summary>
         public FrmMatriz()
         {
             InitializeComponent();
             dlgInicializaMatriz = new FrmInicializaMatriz();
+        }
+
+        /// <summary>
+        /// Construtor do form para edição de uma matriz dada.
+        /// </summary>
+        /// <param name="matriz">Matriz a ser editada.</param>
+        public FrmMatriz(MatrizEsparsa matriz) : this()
+        {
+            this.matriz = matriz;
+            ExibirMatriz();
         }
 
         private void btnInicializarManualmente_Click(object sender, EventArgs e)
@@ -56,8 +89,6 @@ namespace super_projeto
                 dgMatriz.Columns.Add(nome, nome);
             }
 
-            dgMatriz.AutoResizeColumns(); // Ajusta o tamanho das colunas
-
             // Adiciona as linhas
             dgMatriz.Rows.Add(matriz.Y);
 
@@ -71,6 +102,8 @@ namespace super_projeto
                 for (int x = 0; x < matriz.Y; x++)
                     dgMatriz.Rows[y].Cells[x].Value = matriz.ElementoEm(x, y).ToString();
             }
+
+            dgMatriz.AutoResizeColumns(); // Ajusta o tamanho das colunas
         }
         
         private void btnInicializarArquivo_Click(object sender, EventArgs e)
@@ -126,13 +159,23 @@ namespace super_projeto
             else
                 try
                 {
-                    matriz.Inserir(e.RowIndex, e.ColumnIndex, Convert.ToDouble(valor));
+                    matriz.Inserir(e.ColumnIndex, e.RowIndex, Convert.ToDouble(valor));
                 }
                 catch (FormatException err)
                 {
                     MessageBox.Show(this, "Formato inválido.", "Erro de inserção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     celuladg.Value = "0";
                 }
+        }
+
+        private void somarConstanteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmSomarConstante dlgConstante = new FrmSomarConstante(matriz.X);
+            if (dlgConstante.ShowDialog() == DialogResult.OK)
+            {
+                matriz.Somar(dlgConstante.Coluna, dlgConstante.Constante);
+                ExibirMatriz();
+            }
         }
     }
 }

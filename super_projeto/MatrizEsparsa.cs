@@ -6,7 +6,7 @@ namespace Matriz
     /// <summary>
     /// Classe encapsuladora das listas de células. Representa uma matriz esparsa.
     /// </summary>
-    class MatrizEsparsa
+    public class MatrizEsparsa
     {
         private Celula<double> inicio;
 
@@ -87,13 +87,8 @@ namespace Matriz
             while (atual.Abaixo.Y != -1 && atual.Abaixo.Y < y)
                 atual = atual.Abaixo;
 
-            if (atual.Abaixo.Y == -1)
-            {
-                nova.Abaixo = atual.Abaixo;
-                atual.Abaixo = nova;
-            }
-            else if (atual.Abaixo.Y == y)
-                ((Celula<double>)atual).Info = valor;
+            nova.Abaixo = atual.Abaixo;
+            atual.Abaixo = nova;
 
             atual = inicio;
             while (atual.Y < y)
@@ -102,13 +97,8 @@ namespace Matriz
             while (atual.Direita.X != -1 && atual.Direita.X < x)
                 atual = atual.Direita;
 
-            if (atual.Direita.X == -1)
-            {
-                nova.Direita = atual.Direita;
-                atual.Direita = nova;
-            }
-            else if (atual.Direita.X == x)
-                ((Celula<double>)atual).Info = valor;
+            nova.Direita = atual.Direita;
+            atual.Direita = nova;
         }
 
 
@@ -189,6 +179,9 @@ namespace Matriz
         /// <param name="k">Constante a ser somada</param>
         public void Somar(int coluna, double k)
         {
+            if (k == 0) // Caso deva somar 0, retorna, já que o método não terá efeito
+                return;
+
             if (coluna >= this.x || coluna < 0)
                 throw new ArgumentOutOfRangeException("Coluna fora de intervalo: [0, " + this.x + "[");
 
@@ -197,12 +190,34 @@ namespace Matriz
             while (atual.X < coluna)
                 atual = atual.Direita;
 
+            // Primeiramente, percorre a coluna, apenas adicionando valores
+            do
+            {
+                if (atual.Y != -1) // Pois a célula só possui campo info se não for nó cabeça
+                    ((Celula<double>)atual).Info += k; 
+
+                int distancia = atual.Abaixo.Y - atual.Y; // Calcula a distância física entre duas células, incluindo os zeros não armazenados na conta
+                if (atual.Abaixo.Y == -1)
+                    distancia = this.y - atual.Y; // Caso a lista dê uma volta, a distância conta como 
+
+                for (int i = 0; i < distancia - 1; i++) // Repete até que não haja mais espaços "em branco" entre as células
+                {
+                    Inserir(coluna, atual.Y + 1, k);
+                    atual = atual.Abaixo;
+                }
+                atual = atual.Abaixo;
+            } while (atual.Y != -1);
+
+
+            // Por último, verifica se as células valem 0. Se valerem, as remove da coluna
             atual = atual.Abaixo;
             while (atual.Y != -1)
             {
-                ((Celula<double>)atual).Info += k;
+                if (((Celula<double>)atual).Info == 0)
+                    Remover(coluna, atual.Y);
+                    
                 atual = atual.Abaixo;
-            } 
+            }
         }
     }
 }

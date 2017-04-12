@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace super_projeto
@@ -16,7 +13,7 @@ namespace super_projeto
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmMatriz());
+            Application.Run(new FrmPrincipal());
         }
     }
 }

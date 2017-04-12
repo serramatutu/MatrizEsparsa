@@ -35,6 +35,8 @@
             this.btnInicializarManualmente = new System.Windows.Forms.ToolStripMenuItem();
             this.btnInicializarArquivo = new System.Windows.Forms.ToolStripMenuItem();
             this.dlgAbrir = new System.Windows.Forms.OpenFileDialog();
+            this.btnOperacoes = new System.Windows.Forms.ToolStripDropDownButton();
+            this.somarConstanteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgMatriz)).BeginInit();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
@@ -56,7 +58,8 @@
             // toolStrip
             // 
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnInicializar});
+            this.btnInicializar,
+            this.btnOperacoes});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(584, 25);
@@ -78,14 +81,14 @@
             // btnInicializarManualmente
             // 
             this.btnInicializarManualmente.Name = "btnInicializarManualmente";
-            this.btnInicializarManualmente.Size = new System.Drawing.Size(148, 22);
+            this.btnInicializarManualmente.Size = new System.Drawing.Size(152, 22);
             this.btnInicializarManualmente.Text = "Manualmente";
             this.btnInicializarManualmente.Click += new System.EventHandler(this.btnInicializarManualmente_Click);
             // 
             // btnInicializarArquivo
             // 
             this.btnInicializarArquivo.Name = "btnInicializarArquivo";
-            this.btnInicializarArquivo.Size = new System.Drawing.Size(148, 22);
+            this.btnInicializarArquivo.Size = new System.Drawing.Size(152, 22);
             this.btnInicializarArquivo.Text = "Arquivo";
             this.btnInicializarArquivo.Click += new System.EventHandler(this.btnInicializarArquivo_Click);
             // 
@@ -93,6 +96,24 @@
             // 
             this.dlgAbrir.DefaultExt = "Arquivo Texto | *.txt";
             this.dlgAbrir.Filter = "Arquivo Texto | *.txt";
+            // 
+            // btnOperacoes
+            // 
+            this.btnOperacoes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnOperacoes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.somarConstanteToolStripMenuItem});
+            this.btnOperacoes.Image = ((System.Drawing.Image)(resources.GetObject("btnOperacoes.Image")));
+            this.btnOperacoes.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOperacoes.Name = "btnOperacoes";
+            this.btnOperacoes.Size = new System.Drawing.Size(76, 22);
+            this.btnOperacoes.Text = "Operações";
+            // 
+            // somarConstanteToolStripMenuItem
+            // 
+            this.somarConstanteToolStripMenuItem.Name = "somarConstanteToolStripMenuItem";
+            this.somarConstanteToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.somarConstanteToolStripMenuItem.Text = "Somar constante";
+            this.somarConstanteToolStripMenuItem.Click += new System.EventHandler(this.somarConstanteToolStripMenuItem_Click);
             // 
             // FrmMatriz
             // 
@@ -119,6 +140,8 @@
         private System.Windows.Forms.ToolStripMenuItem btnInicializarManualmente;
         private System.Windows.Forms.ToolStripMenuItem btnInicializarArquivo;
         private System.Windows.Forms.OpenFileDialog dlgAbrir;
+        private System.Windows.Forms.ToolStripDropDownButton btnOperacoes;
+        private System.Windows.Forms.ToolStripMenuItem somarConstanteToolStripMenuItem;
     }
 }
 
