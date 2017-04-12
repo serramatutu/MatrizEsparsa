@@ -36,10 +36,13 @@ namespace super_projeto
                 cbxResultado.Items.Add(i.ToString());
             }
 
-            cbxMatriz1.SelectedIndex = 0;
-            cbxMatriz2.SelectedIndex = 0;
-            cbxMatrizes.SelectedIndex = 0;
-            cbxResultado.SelectedIndex = 0;
+            if (quantasMatrizes > 0)
+            {
+                cbxMatriz1.SelectedIndex = 0;
+                cbxMatriz2.SelectedIndex = 0;
+                cbxMatrizes.SelectedIndex = 0;
+                cbxResultado.SelectedIndex = 0;
+            }
         }
 
         private void btnNovaMatriz_Click(object sender, System.EventArgs e)

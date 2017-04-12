@@ -88,18 +88,25 @@ namespace Matriz
             while (atual.Abaixo.Y != -1 && atual.Abaixo.Y < y)
                 atual = atual.Abaixo;
 
-            nova.Abaixo = atual.Abaixo;
-            atual.Abaixo = nova;
+            //Como estamos na posição X correta, caso tenha alguma celula no Y pedido, ja existe um valor na posição,
+            //então esse valor é apenas alterado
+            if (atual.Abaixo.Y == y)
+                ((Celula<double>)atual.Abaixo).Info = valor;
+            else
+            {
+                nova.Abaixo = atual.Abaixo;
+                atual.Abaixo = nova;
 
-            atual = inicio;
-            while (atual.Y < y)
-                atual = atual.Abaixo;
+                atual = inicio;
+                while (atual.Y < y)
+                    atual = atual.Abaixo;
 
-            while (atual.Direita.X != -1 && atual.Direita.X < x)
-                atual = atual.Direita;
+                while (atual.Direita.X != -1 && atual.Direita.X < x)
+                    atual = atual.Direita;
 
-            nova.Direita = atual.Direita;
-            atual.Direita = nova;
+                nova.Direita = atual.Direita;
+                atual.Direita = nova;
+            }
         }
 
 
@@ -242,18 +249,22 @@ namespace Matriz
             return ret;
         }
         
+        /// <summary>
+        /// Multiplica a matriz atual por uma matria M
+        /// </summary>
+        /// <param name="m">Matriz que multiplicará a atual, seu número de linhas deve ser igual ao número de colunas da atual</param>
         public MatrizEsparsa Multiplicar(MatrizEsparsa m)
         {
             if (this.X != m.Y)
                 throw new ArgumentOutOfRangeException("O número de linhas da matriz passada deve ser o mesmo que o número de colunas da atual");
                 
-            MatrizEsparsa ret = new MatrizEsparsa(this.X, m.Y);
+            MatrizEsparsa ret = new MatrizEsparsa(m.X, this.Y);
             for (int j = 0; j < m.X; j++)
                 for (int n = 0; n < this.Y; n++)
                 {
                     Double d = 0;
                     for (int i = 0; i < this.X; i++)
-                        d += this.ElementoEm(i, n) + m.ElementoEm(j, i);
+                        d += this.ElementoEm(i, n) * m.ElementoEm(j, i);
                         
                     ret.Inserir(j, n, d);
                 }
