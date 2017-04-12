@@ -8,6 +8,7 @@ namespace Matriz
     /// </summary>
     public class MatrizEsparsa
     {
+        public const double VALOR_PADRAO = 0;
         private Celula<double> inicio;
 
         private int x, y;
@@ -169,7 +170,7 @@ namespace Matriz
             if (atual.X == x && atual.Y == y)
                 return ((Celula<double>)atual).Info;
 
-            return 0; //A célula especificada não existe, então assume que o valor é 0
+            return VALOR_PADRAO; //A célula especificada não existe, então assume que o valor é 0
         }
 
         /// <summary>
@@ -218,6 +219,46 @@ namespace Matriz
                     
                 atual = atual.Abaixo;
             }
+        }
+        
+        /// <summary>
+        /// Soma a matriz esparsa atual com outra matriz esparsa e retorna essa soma
+        /// </summary>
+        /// <para name="m">Matriz a ser somada na atual, com o mesmo número de linhas e colunas
+        public MatrizEsparsa Somar(MatrizEsparsa m)
+        {
+            if (m.X != this.X || m.Y != this.Y)
+                throw new ArgumentOutOfRangeException("A matriz passada deve ser de mesmo tamanho que a atual (" + this.Y + ", " + this.X + ")");
+                
+            MatrizEsparsa ret = new MatrizEsparsa(this.X, this.Y);
+            for (int n = 0; n < this.Y; n++)
+                for (int i = 0; i < this.X; i++)
+                {
+                    double d = this.ElementoEm(i, n) + m.ElementoEm(i, n);
+                    if (d != 0)
+                        ret.Inserir(i, n, d);
+                }
+                
+            return ret;
+        }
+        
+        public MatrizEsparsa Multiplicar(MatrizEsparsa m)
+        {
+            if (this.X != m.Y)
+                throw new ArgumentOutOfRangeException("O número de linhas da matriz passada deve ser o mesmo que o número de colunas da atual");
+                
+            MatrizEsparsa ret = new MatrizEsparsa(this.X, m.Y);
+            for (int j = 0; j < m.X; j++)
+                for (int n = 0; n < this.Y; n++)
+                {
+                    Double d = 0;
+                    for (int i = 0; i < this.X; i++)
+                        d += this.ElementoEm(i, n) + m.ElementoEm(j, i);
+                        
+                    ret.Inserir(j, n, d);
+                }
+                
+            return ret;
         }
     }
 }
