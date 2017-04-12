@@ -107,6 +107,7 @@
             this.btnSomar.TabIndex = 7;
             this.btnSomar.Text = "Somar";
             this.btnSomar.UseVisualStyleBackColor = true;
+            this.btnSomar.Click += new System.EventHandler(this.btnSomar_Click);
             // 
             // btnMultiplicar
             // 
@@ -116,6 +117,7 @@
             this.btnMultiplicar.TabIndex = 8;
             this.btnMultiplicar.Text = "Multiplicar";
             this.btnMultiplicar.UseVisualStyleBackColor = true;
+            this.btnMultiplicar.Click += new System.EventHandler(this.btnMultiplicar_Click);
             // 
             // label2
             // 

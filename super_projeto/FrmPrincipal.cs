@@ -79,5 +79,21 @@ namespace super_projeto
                 matrizes[cbxMatrizes.SelectedIndex] = form.Matriz;
             }
         }
+
+        private void btnSomar_Click(object sender, EventArgs e)
+        {
+            if (quantasMatrizes <= 0)
+                throw new InvalidOperationException();
+
+            matrizes[cbxResultado.SelectedIndex] = matrizes[cbxMatriz1.SelectedIndex].Somar(matrizes[cbxMatriz1.SelectedIndex]);
+        }
+
+        private void btnMultiplicar_Click(object sender, EventArgs e)
+        {
+            if (quantasMatrizes <= 0)
+                throw new InvalidOperationException();
+
+            matrizes[cbxResultado.SelectedIndex] = matrizes[cbxMatriz1.SelectedIndex].Multiplicar(matrizes[cbxMatriz1.SelectedIndex]);
+        }
     }
 }
