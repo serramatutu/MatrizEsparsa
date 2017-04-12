@@ -99,7 +99,7 @@ namespace super_projeto
             // Adiciona os valores da matriz ao dg
             for (int y = 0; y < matriz.Y; y++)
             {
-                for (int x = 0; x < matriz.Y; x++)
+                for (int x = 0; x < matriz.X; x++)
                     dgMatriz.Rows[y].Cells[x].Value = matriz.ElementoEm(x, y).ToString();
             }
 

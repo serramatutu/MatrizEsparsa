@@ -35,6 +35,11 @@ namespace super_projeto
                 cbxMatrizes.Items.Add(i.ToString());
                 cbxResultado.Items.Add(i.ToString());
             }
+
+            cbxMatriz1.SelectedIndex = 0;
+            cbxMatriz2.SelectedIndex = 0;
+            cbxMatrizes.SelectedIndex = 0;
+            cbxResultado.SelectedIndex = 0;
         }
 
         private void btnNovaMatriz_Click(object sender, System.EventArgs e)
@@ -73,6 +78,8 @@ namespace super_projeto
 
         private void btnEditarMatriz_Click(object sender, EventArgs e)
         {
+            if (quantasMatrizes == 0)
+                MessageBox.Show("Não há matriz selecioada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             FrmMatriz form = new FrmMatriz(matrizes[cbxMatrizes.SelectedIndex]);
             if (form.ShowDialog() == DialogResult.OK)
             {
@@ -91,9 +98,9 @@ namespace super_projeto
         private void btnMultiplicar_Click(object sender, EventArgs e)
         {
             if (quantasMatrizes <= 0)
-                throw new InvalidOperationException();
+                MessageBox.Show("Não há matrizes disponíveis.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-            matrizes[cbxResultado.SelectedIndex] = matrizes[cbxMatriz1.SelectedIndex].Multiplicar(matrizes[cbxMatriz1.SelectedIndex]);
+            matrizes[cbxResultado.SelectedIndex] = matrizes[cbxMatriz1.SelectedIndex].Multiplicar(matrizes[cbxMatriz2.SelectedIndex]);
         }
     }
 }
