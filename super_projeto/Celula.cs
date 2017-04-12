@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MatrizEsparsa
+namespace Matriz
 {
     /// <summary>
     /// Classe utilizada como célula da matriz esparsa. Não é tipada pois não contém um dado. 
@@ -151,9 +151,17 @@ namespace MatrizEsparsa
         /// <param name="abaixo">Define o nó imediatamente abaixo da célula na matriz.</param>
         /// <param name="direita">Define o nó imediatamente à direita da célula na matriz.</param>
         /// <param name="info">Informação do tipo Dado a ser armazenada na célula</param>
-        public Celula(int x, int y, Celula<Dado> abaixo, Celula<Dado> direita, Dado info) : base(x, y, abaixo, direita)
+        public Celula(int x, int y, Celula abaixo, Celula direita, Dado info) : base(x, y, abaixo, direita)
         {
             this.info = info;
+        }
+
+        /// <summary>
+        /// Construtor de célula com dado padrão
+        /// </summary>
+        public Celula(int x, int y, Celula abaixo, Celula direita) : base(x, y, abaixo, direita)
+        {
+            this.info = default(Dado);
         }
 
         public override string ToString()

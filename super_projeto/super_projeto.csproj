@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrmInicializaMatriz.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmInicializaMatriz.Designer.cs">
+      <DependentUpon>FrmInicializaMatriz.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmMatriz.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -56,6 +62,9 @@
     <Compile Include="Celula.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmInicializaMatriz.resx">
+      <DependentUpon>FrmInicializaMatriz.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmMatriz.resx">
       <DependentUpon>FrmMatriz.cs</DependentUpon>
     </EmbeddedResource>
@@ -80,6 +89,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="teste.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
