@@ -64,17 +64,12 @@ namespace super_projeto
             // Adiciona título às linhas
             for (int i = 0; i < matriz.Y; i++)
                 dgMatriz.Rows[i].HeaderCell.Value = i.ToString();
-
-            // Adiciona um data table correspondente à matriz ao dgMatriz
-            dgHue.DataSource = matriz.DataSource;
-            dgHue.AutoResizeColumns(); // Ajusta o tamanho das colunas
-        }
-
-        private void btnSalvar_Click(object sender, EventArgs e)
-        {
-            if (dlgSalvar.ShowDialog(this) == DialogResult.OK)
+            
+            // Adiciona os valores da matriz ao dg
+            for (int y = 0; y < matriz.Y; y++)
             {
-
+                for (int x = 0; x < matriz.Y; x++)
+                    dgMatriz.Rows[y].Cells[x].Value = matriz.ElementoEm(x, y).ToString();
             }
         }
         
@@ -114,16 +109,20 @@ namespace super_projeto
                     matriz.Inserir(Convert.ToInt32(celula[0]), Convert.ToInt32(celula[1]), Convert.ToDouble(celula[2]));
                 }
 
-                dgHue.DataSource = matriz.DataSource;
-                dgHue.AutoResizeColumns();
+                ExibirMatriz();
             }
         }
 
         private void dgMatriz_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            string valor = (String)dgMatriz.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+            DataGridViewCell celuladg = dgMatriz.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+            string valor = (String)celuladg.Value;
             if (String.IsNullOrEmpty(valor) || valor == "0")
+            {
                 matriz.Remover(e.RowIndex, e.ColumnIndex);
+                celuladg.Value = "0";
+            }   
             else
                 try
                 {
@@ -132,6 +131,7 @@ namespace super_projeto
                 catch (FormatException err)
                 {
                     MessageBox.Show(this, "Formato inválido.", "Erro de inserção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    celuladg.Value = "0";
                 }
         }
     }

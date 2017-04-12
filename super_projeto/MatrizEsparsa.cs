@@ -10,11 +10,6 @@ namespace Matriz
     {
         private Celula<double> inicio;
 
-        /// <summary>
-        /// Objeto que armazena os dados presentes na matriz esparsa. Serve para exibir dados em um elemento gráfico.
-        /// </summary>
-        private DataTable dataSource;
-
         private int x, y;
 
         /// <summary>
@@ -34,16 +29,7 @@ namespace Matriz
         }
 
         /// <summary>
-        /// Retorna o objeto dataSource, que pode ser utilizado por elementos gráficos para preenchimento de dados.
-        /// </summary>
-        public DataTable DataSource
-        {
-            get { return dataSource; }
-        }
-
-        /// <summary>
         /// Construtor que inicializa a matriz.
-        /// Inicializa também o DataSource, que pode ser utilizado por forms para atualizar componentes.
         /// </summary>
         /// <param name="x">Tamanho horizontal da matriz.</param>
         /// <param name="y">Tamanho vertical da matriz.</param>
@@ -77,14 +63,6 @@ namespace Matriz
                 atual.Direita = atual; // Faz com que o nó referencie ele mesmo na direção para a direita.
             }
             atual.Abaixo = inicio; // Finalmente, faz com que o último referencie o primeiro e transforma a lista em circular.
-
-            // Inicializa o data source com as dimensões especificadas
-            dataSource = new DataTable("MatrizEsparsa");
-            for (int i = 0; i < x; i++)
-                dataSource.Columns.Add(i.ToString());
-
-            for (int i = 0; i < y; i++)
-                dataSource.Rows.Add();
         }
 
         /// <summary>
@@ -131,9 +109,6 @@ namespace Matriz
             }
             else if (atual.Direita.X == x)
                 ((Celula<double>)atual).Info = valor;
-
-            // Atualiza o data source da matriz com o novo dado inserido
-            dataSource.Rows[x][y] = valor;
         }
 
 
@@ -178,9 +153,6 @@ namespace Matriz
 
                 //Não é nescessário fazer a checagem do eixo X, pois nesta parte do código temos certeza que a célula existe
                 anterior.Direita = atual.Direita;
-
-                // Remove a célula do DataSource
-                dataSource.Rows[x][y] = null;
             }
         }
 
@@ -207,9 +179,30 @@ namespace Matriz
             if (atual.X == x && atual.Y == y)
                 return ((Celula<double>)atual).Info;
 
-            return default(double); //A célula especificada não existe
+            return 0; //A célula especificada não existe, então assume que o valor é 0
         }
 
-        public void Somar()
+        /// <summary>
+        /// Soma uma constante a uma coluna em específico
+        /// </summary>
+        /// <param name="coluna">Índice da coluna a ser afetada.</param>
+        /// <param name="k">Constante a ser somada</param>
+        public void Somar(int coluna, double k)
+        {
+            if (coluna >= this.x || coluna < 0)
+                throw new ArgumentOutOfRangeException("Coluna fora de intervalo: [0, " + this.x + "[");
+
+            // Posiciona o ponteiro atual na coluna desejada
+            Celula atual = inicio;
+            while (atual.X < coluna)
+                atual = atual.Direita;
+
+            atual = atual.Abaixo;
+            while (atual.Y != -1)
+            {
+                ((Celula<double>)atual).Info += k;
+                atual = atual.Abaixo;
+            } 
+        }
     }
 }
