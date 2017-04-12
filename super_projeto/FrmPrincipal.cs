@@ -92,7 +92,7 @@ namespace super_projeto
             if (quantasMatrizes <= 0)
                 throw new InvalidOperationException();
 
-            matrizes[cbxResultado.SelectedIndex] = matrizes[cbxMatriz1.SelectedIndex].Somar(matrizes[cbxMatriz1.SelectedIndex]);
+            matrizes[cbxResultado.SelectedIndex] = matrizes[cbxMatriz1.SelectedIndex].Somar(matrizes[cbxMatriz2.SelectedIndex]);
         }
 
         private void btnMultiplicar_Click(object sender, EventArgs e)
